@@ -74,9 +74,10 @@
                         "uid": "Thanos"
                     },
                     "editorMode": "code",
-                    "expr": "sum(site_visits_total)",
+                    "expr": "site_visits_total",
                     "legendFormat": "__auto",
-                    "range": true,
+                    "range": false,
+                    "instant": true,
                     "refId": "A"
                 }
             ],
@@ -135,9 +136,10 @@
                         "uid": "Thanos"
                     },
                     "editorMode": "code",
-                    "expr": "sum(unique_visitors_total)",
+                    "expr": "unique_visitors_total",
                     "legendFormat": "__auto",
-                    "range": true,
+                    "range": false,
+                    "instant": true,
                     "refId": "A"
                 }
             ],

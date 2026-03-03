@@ -212,6 +212,28 @@ async def prometheus_query_range(request: Request):
     unique_count, visit_count = await _get_counts()
     value = _resolve_value(query, unique_count, visit_count)
 
+    # Parse start/end so we fill the full requested window.
+    # Grafana sends start/end in the POST form body (seconds as float strings).
+    now = time.time()
+    start = now - 3600  # fallback: 1 hour ago
+    end = now
+
+    try:
+        form = await request.form()
+        if "start" in form:
+            start = float(form["start"])
+        if "end" in form:
+            end = float(form["end"])
+    except Exception:
+        pass  # GET params or parse error — use fallback window
+
+    # Emit one data point at start, one at end so Grafana always has values
+    # in the requested window. Both carry the same current metric value.
+    values = [
+        [start, str(value)],
+        [end, str(value)],
+    ]
+
     return {
         "status": "success",
         "data": {
@@ -219,7 +241,7 @@ async def prometheus_query_range(request: Request):
             "result": [
                 {
                     "metric": {"__name__": query or "unknown"},
-                    "values": [[time.time(), str(value)]]
+                    "values": values
                 }
             ]
         }
