@@ -30,13 +30,14 @@ This project demonstrates a robust, production-ready stack designed around the c
 ## 🏗️ Cloud Native Architecture
 
 ```mermaid
-flowchart TD
+flowchart LR
     %% User Interactions
     User((Client Request)) -->|HTTPS GET| ACA_API[ACA: FastAPI Backend\nPython 3.12]
     Admin((Platform Admin)) -->|HTTPS GET| ACA_Grafana[ACA: Grafana Dashboard\nScale to 0]
     
     %% Compute & Workload
     subgraph Compute [Serverless Microservice Layer]
+        direction TB
         ACA_API -.->|Route: /| Static[Static HTML/JS\nTailwind Frontend]
         ACA_API -.->|Middleware| Tracker(IP Telemetry Tracker)
         ACA_API ===>|Route: /api/weather| OM{Open-Meteo API}
@@ -44,6 +45,7 @@ flowchart TD
     
     %% Data & Observability
     subgraph Observability [Zero-Cost Data Tier]
+        direction TB
         Tracker ===>|Async Upsert| ATS[(Azure Table Storage)]
         ACA_Grafana ===>|/api/v1/query_range| ACA_API
         ACA_API -.->|Reads| ATS
@@ -51,9 +53,10 @@ flowchart TD
 
     %% Platform Ecosystem
     subgraph CI_CD [Platform Provisioning]
+        direction TB
         TF[Terraform CLI] -->|Local apply| Compute
         TF -->|Local apply| Observability
-        GH[GitHub Actions] -.->|Manual Trigger: docker push| ACR[(Azure Container Registry)]
+        GH[GitHub Actions] -.->|workflow_dispatch: docker push| ACR[(Azure Container Registry)]
         GH -.->|az containerapp update| Compute
         ACR -.->|image pull| Compute
     end
