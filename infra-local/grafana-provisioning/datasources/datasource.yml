@@ -1,0 +1,9 @@
+apiVersion: 1
+
+datasources:
+  - name: Thanos
+    type: prometheus
+    access: proxy
+    url: ${API_METRICS_URL}
+    isDefault: true
+    editable: false

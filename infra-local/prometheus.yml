@@ -1,0 +1,10 @@
+global:
+  scrape_interval: 15s
+  external_labels:
+    cluster: 'vancouver-weather-local'
+    replica: '0'
+
+scrape_configs:
+  - job_name: 'vancouver-weather-app'
+    static_configs:
+      - targets: ['weather-backend:8000']
