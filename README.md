@@ -1,4 +1,4 @@
-![Header Image](image.png)
+![Header Image](demo-screenshot.png)
 
 # Vancouver Weather Microservice 🌦️
 
