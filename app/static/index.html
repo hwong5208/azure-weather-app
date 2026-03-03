@@ -343,9 +343,15 @@
         setInterval(updateVancouverTime, 1000);
         updateVancouverTime();
 
+        // Dynamic Configuration for Edge CDN (Cloudflare Pages)
+        const currentHost = window.location.hostname;
+        const API_BASE_URL = (currentHost === 'localhost' || currentHost === '127.0.0.1')
+            ? ''
+            : 'https://ca-yvrweather-dev.purplemoss-a3a065ae.westus3.azurecontainerapps.io';
+
         async function fetchWeather() {
             try {
-                const response = await fetch('/api/weather');
+                const response = await fetch(`${API_BASE_URL}/api/weather`);
                 if (!response.ok) throw new Error('Network response was not ok');
 
                 const data = await response.json();
@@ -447,7 +453,7 @@
         // Fetch Telemetry on load
         async function fetchTelemetry() {
             try {
-                const response = await fetch('/api/telemetry');
+                const response = await fetch(`${API_BASE_URL}/api/telemetry`);
                 if (response.ok) {
                     const data = await response.json();
                     document.getElementById('telemetry-visits').textContent = data.total_visits;
@@ -461,16 +467,13 @@
         // Dynamic Link Resolution
         function setupObservabilityLinks() {
             const host = window.location.hostname;
-            const protocol = window.location.protocol;
 
             // Default to local docker-compose ports if running locally
             let grafanaBaseUri = 'http://localhost:3000';
 
-            // In Azure Container Apps, the Grafana container has a different name prefix.
-            // Weather app: ca-yvrweather-dev.purplemoss-...
-            // Grafana app:  ca-grafana-yvrweather-dev.purplemoss-...
+            // Production Grafana Container App URL
             if (host !== 'localhost' && host !== '127.0.0.1') {
-                grafanaBaseUri = `https://${host.replace('ca-', 'ca-grafana-')}`;
+                grafanaBaseUri = 'https://ca-grafana-yvrweather-dev.purplemoss-a3a065ae.westus3.azurecontainerapps.io';
             }
 
             document.getElementById('grafana-link').href = `${grafanaBaseUri}/d/vancouver-weather-metrics/vancouver-weather-telemetry?orgId=1&refresh=5s`;
