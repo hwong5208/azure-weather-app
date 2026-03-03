@@ -20,7 +20,7 @@ This project demonstrates a robust, production-ready stack designed around the c
 ### 🏗️ Architecture & Automation
 - **Infrastructure as Code (IaC)**: Fully automated provisioning of Azure Container Registry (ACR), Azure Container Apps (ACA), Log Analytics Workspaces, and Storage Accounts using **Terraform (HCL)**.
 - **Microservices Architecture**: A decoupled **Python FastAPI** backend serving as an API layer, consuming external APIs asynchronously (`httpx`), packed in a minimal Docker footprint.
-- **Continuous Integration / Continuous Deployment (CI/CD)**: Handled via **GitHub Actions**. Pushing to `main` authenticates via Azure Service Principals, plans Terraform updates, builds the Docker images, and executes zero-downtime rolling updates to the ACA environment.
+- **Continuous Integration / Continuous Deployment (CI/CD)**: Application deployments are handled via **GitHub Actions** using a manual `workflow_dispatch` trigger for strict deployment control. Running the workflow authenticates via Azure Service Principals, builds the Docker images, pushes to ACR, and executes zero-downtime rolling updates to the ACA environment. Terraform (IaC) is applied sequentially from the local environment to prevent remote state drift.
 - **Frontend Developer Experience**: A sleek, responsive user interface utilizing Tailwind CSS, Lucide Icons, and Vanilla JavaScript. Features a responsive 14-day extended outlook weather carousel.
 
 ---
@@ -49,10 +49,10 @@ flowchart TD
 
     %% Platform Ecosystem
     subgraph CI_CD [Platform Provisioning]
-        TF[Terraform] -->|Provisions| Compute
-        TF -->|Provisions| Observability
-        GH[GitHub Actions] -->|terraform apply| TF
-        GH -.->|docker push| ACR[(Azure Container Registry)]
+        TF[Terraform CLI] -->|Local apply| Compute
+        TF -->|Local apply| Observability
+        GH[GitHub Actions] -.->|Manual Trigger: docker push| ACR[(Azure Container Registry)]
+        GH -.->|az containerapp update| Compute
         ACR -.->|image pull| Compute
     end
 
@@ -116,7 +116,7 @@ GRAFANA_REV=$(az containerapp revision list -n ca-grafana-yourname-prod -g rg-yo
 az containerapp revision restart --revision $GRAFANA_REV -n ca-grafana-yourname-prod -g rg-yourname-prod
 ```
 
-Alternatively, configure your `AZURE_CREDENTIALS` in GitHub Secrets and push to the `main` branch to trigger the **GitHub Actions** automated workflow.
+Alternatively, configure your `AZURE_CREDENTIALS` (Service Principal), `ACR_USERNAME`, and `ACR_PASSWORD` in GitHub Secrets. You can then navigate to the **Actions** tab in GitHub and manually trigger the **Deploy to Azure Container Apps** workflow to push code changes directly to Azure.
 
 ---
 
