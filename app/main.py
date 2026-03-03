@@ -1,5 +1,4 @@
 from fastapi import FastAPI, HTTPException, Request, Form
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse
 import httpx
@@ -15,19 +14,6 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Vancouver Weather Microservice")
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        "https://azureweatherapp.designdisarray.com",
-        "http://localhost", 
-        "http://localhost:8000",
-        "http://localhost:3000"
-    ],
-    allow_credentials=True,
-    allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["*"],
-)
 
 # Setup Azure Table Storage Client
 STORAGE_CONN_STR = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
