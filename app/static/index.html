@@ -199,19 +199,35 @@
                     </div>
                 </div>
 
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-3 font-medium font-mono text-[10px] tracking-wider uppercase">
-                        <span>ACA</span>
-                        <span class="w-1 h-1 rounded-full bg-slate-600"></span>
-                        <span>ACR</span>
-                        <span class="w-1 h-1 rounded-full bg-slate-600"></span>
-                        <span>Table Storage</span>
+                <div class="flex items-start justify-between">
+                    <div class="flex flex-col space-y-2 font-medium font-mono text-[10px] tracking-wider">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-slate-500 w-20">Cloud (Azure):</span>
+                            <span class="text-slate-300">ACA • ACR • Table Storage</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-slate-500 w-20">Infra:</span>
+                            <span class="text-slate-300">Docker</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-slate-500 w-20">Language:</span>
+                            <span class="text-slate-300">Python (FastAPI) • Vanilla JS</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-slate-500 w-20">CI/CD:</span>
+                            <span class="text-slate-300">Terraform • GitHub Actions</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-slate-500 w-20">Monitoring:</span>
+                            <span class="text-slate-300">Grafana</span>
+                        </div>
                     </div>
-                    <div class="flex items-center space-x-3 font-medium text-[11px]">
+
+                    <div class="flex items-end justify-end h-full pt-16">
                         <a id="grafana-link" href="#" target="_blank"
-                            class="hover:text-blue-400 transition-colors flex items-center space-x-1">
+                            class="hover:text-blue-400 transition-colors flex items-center space-x-1 font-medium text-[11px] bg-slate-800/50 py-1.5 px-3 rounded-lg border border-slate-700/50">
                             <i data-lucide="line-chart" class="w-3 h-3"></i>
-                            <span>Grafana Dashboard</span>
+                            <span>View Grafana Dashboard</span>
                         </a>
                     </div>
                 </div>
