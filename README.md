@@ -126,4 +126,4 @@ Alternatively, configure your `AZURE_CREDENTIALS` in GitHub Secrets and push to 
 - **FinOps Routing**: Grafana dynamically calculates its API route natively from the Container App host injection via `datasource.yml` variable interpolation, completely eliminating hardcoded domains.
 - **Stateless Design**: Designed perfectly for Kubernetes scaling, the application does not persist any local state on the container filesystem and reads entirely from environment variables and HTTP contexts.
 
-**Tech Stack**: Azure Container Apps, Azure Table Storage, Terraform, Docker, Python (FastAPI), Grafana, GitHub Actions, Bash, HTML/Tailwind.
+**Tech Stack**: Azure Container Apps, Azure Table Storage, Terraform, Docker, Python (FastAPI), Grafana, GitHub Actions, Bash, HTML/Tailwind, Antigravity Google (Claude Sonnet 4.6 & Gemini 3.1 Pro).
