@@ -107,8 +107,13 @@ docker push $ACR_SERVER/vancouver-weather-app:latest
 docker build -t $ACR_SERVER/weather-grafana:latest ./infra-local
 docker push $ACR_SERVER/weather-grafana:latest
 
-# 4. Trigger Container App Update
-az containerapp update -n ca-yourname-prod -g rg-yourname-prod --image $ACR_SERVER/vancouver-weather-app:latest
+# 4. Force Container App to Pull Latest Image and Restart
+# (Simply using update --image doesn't always pull if the tag 'latest' hasn't changed)
+APP_REV=$(az containerapp revision list -n ca-yourname-prod -g rg-yourname-prod --query "[0].name" -o tsv)
+az containerapp revision restart --revision $APP_REV -n ca-yourname-prod -g rg-yourname-prod
+
+GRAFANA_REV=$(az containerapp revision list -n ca-grafana-yourname-prod -g rg-yourname-prod --query "[0].name" -o tsv)
+az containerapp revision restart --revision $GRAFANA_REV -n ca-grafana-yourname-prod -g rg-yourname-prod
 ```
 
 Alternatively, configure your `AZURE_CREDENTIALS` in GitHub Secrets and push to the `main` branch to trigger the **GitHub Actions** automated workflow.
