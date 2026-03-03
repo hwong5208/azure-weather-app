@@ -21,6 +21,8 @@ This project demonstrates a robust, production-ready stack designed around the c
 - **Infrastructure as Code (IaC)**: Fully automated provisioning of Azure Container Registry (ACR), Azure Container Apps (ACA), Log Analytics Workspaces, and Storage Accounts using **Terraform (HCL)**.
 - **Microservices Architecture**: A decoupled **Python FastAPI** backend serving as an API layer, consuming external APIs asynchronously (`httpx`), packed in a minimal Docker footprint.
 - **Continuous Integration / Continuous Deployment (CI/CD)**: Application deployments are handled via **GitHub Actions** using a manual `workflow_dispatch` trigger for strict deployment control. Running the workflow authenticates via Azure Service Principals, builds the Docker images, pushes to ACR, and executes zero-downtime rolling updates to the ACA environment. Terraform (IaC) is applied sequentially from the local environment to prevent remote state drift.
+  - 🔗 **View Pipeline Code**: [deploy.yml](https://github.com/hwong5208/azure-weather-app/blob/main/.github/workflows/deploy.yml)
+  - 🎬 **View Live Action Runs**: [GitHub Actions Dashboard](https://github.com/hwong5208/azure-weather-app/actions)
 - **Frontend Developer Experience**: A sleek, responsive user interface utilizing Tailwind CSS, Lucide Icons, and Vanilla JavaScript. Features a responsive 14-day extended outlook weather carousel.
 
 ---
