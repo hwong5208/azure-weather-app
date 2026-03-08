@@ -6,7 +6,6 @@ A cloud-native, serverless weather application engineered to showcase advanced p
 
 This repository isn't just a weather app—it is a blueprint for building high-performance, $0/month production platforms on Azure.
 
-**Live Demo: [tinyurl.com/AzureWeatherApp](https://tinyurl.com/AzureWeatherApp)**
 
 ## 🎯 Platform Engineering Highlights
 
