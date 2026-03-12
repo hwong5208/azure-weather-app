@@ -6,6 +6,9 @@ A cloud-native, serverless weather application engineered to showcase advanced p
 
 This repository isn't just a weather app—it is a blueprint for building high-performance, $0/month production platforms on Azure.
 
+**🚀 Live Demo**: [ca-yvrweather-dev.yellowsea-a8717a4d.westus3.azurecontainerapps.io](https://ca-yvrweather-dev.yellowsea-a8717a4d.westus3.azurecontainerapps.io)
+**📊 Grafana Dashboard**: [ca-grafana-yvrweather-dev.yellowsea-a8717a4d.westus3.azurecontainerapps.io](https://ca-grafana-yvrweather-dev.yellowsea-a8717a4d.westus3.azurecontainerapps.io)
+
 
 ## 🎯 Platform Engineering Highlights
 
@@ -14,7 +17,7 @@ This project demonstrates a robust, production-ready stack designed around the c
 ### 💰 FinOps & Zero-Cost Observability
 - **Serverless Telemetry**: Pivoted from a traditional 24/7 Prometheus database to **Azure Table Storage**. Site visits and unique IPs are tracked via FastAPI middleware and written asynchronously to deep, low-cost NoSQL storage.
 - **Custom Prometheus API**: To maintain Grafana compatibility natively, the Python FastAPI backend implements a custom, mock `PromQL` endpoint (`/api/v1/query_range`), serving Azure Table Storage metric counts as native Prometheus time-series matrices directly to Grafana. No Prometheus instance is running, but Grafana doesn't know the difference.
-- **Scale-to-Zero Dashboards**: The Grafana visualization layer is deployed on Azure Container Apps with a `min_replicas = 0` rule. When the dashboard is not actively being viewed, the Grafana container scales down to exactly 0, pausing all compute costs.
+- **Scale-to-Zero Dashboards**: The Grafana visualization layer is deployed on Azure Container Apps with a `min_replicas = 0` rule. When the dashboard is not actively being viewed, the Grafana container scales down to exactly 0, pausing all compute costs. [📊 View Grafana Dashboard](https://ca-grafana-yvrweather-dev.yellowsea-a8717a4d.westus3.azurecontainerapps.io)
 
 ### 🏗️ Architecture & Automation
 - **Infrastructure as Code (IaC)**: Fully automated provisioning of Azure Container Registry (ACR), Azure Container Apps (ACA), Log Analytics Workspaces, and Storage Accounts using **Terraform (HCL)**.
